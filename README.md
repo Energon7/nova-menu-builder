@@ -1,5 +1,27 @@
-# Nova Menu Builder
+#Advanced Nova Menu Builder
 
+This package forked from [Nova Menu Builder](https://github.com/InfinetyEs/Nova-Menu-Builder)
+
+
+
+!!!
+####This package work only with [Spatie Translatable](https://github.com/spatie/laravel-translatable)
+
+
+Fixes :
+
+    - fix child class (now child class assign to child - ul )
+    - fix too many requests to database
+    - fix enabling/disabling sub menu
+    
+
+   
+Updates : 
+
+    - added compatibility with Spatie Translatable package.
+    
+
+ 
 This tool allows you to create menus in Laravel Nova
 
 <img width="1439" alt="menu builder Home" src="https://user-images.githubusercontent.com/42798230/50765532-7632ea80-1276-11e9-8fed-ec1f6d53983a.png">
@@ -13,7 +35,7 @@ This tool allows you to create menus in Laravel Nova
 You can install the package in to a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
 
 ```bash
-composer require Energon7-es/nova-menu-builder
+composer require energon7-es/nova-menu-builder
 ```
 
 Then you should publish the database table file and migrate it:
@@ -55,7 +77,10 @@ There are two helpers built in for your blades
 
 //or
 
-{!! menu_builder('main', 'parent-class', 'child-class', 'dl', 'dd') !!}
+{!! menu_builder('main', 'parent-class', 'child-class',with children(boolean) , with active/deactive(boolean), 'dl', 
+'dd') !!}
+
+booleans default is true
 ```
 
 * **menu_json('slug')**.   
@@ -118,18 +143,12 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email apps@Energon7.es instead of using the issue tracker.
+If you discover any security related issues, please email energon7777@gmail.com instead of using the issue tracker.
 
 ## Postcardware
 
 You're free to use this package, but if it makes it to your production environment we highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using.
 
-Our address is: Energon7 - Calle Comedias, 8 Floor 3, Suite 5 46003 Valencia (Spain).
-
-## Credits
-
-- [Eric Lagarda](https://github.com/Krato)
-- [Ralph Huwiler (vue-nestable)](https://github.com/rhwilr/vue-nestable)
 
 ## License
 
