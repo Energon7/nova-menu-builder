@@ -35,7 +35,7 @@ This tool allows you to create menus in Laravel Nova
 You can install the package in to a Laravel app that uses [Nova](https://nova.laravel.com) via composer:
 
 ```bash
-composer require energon7-es/nova-menu-builder
+composer require energon7/nova-menu-builder
 ```
 
 Then you should publish the database table file and migrate it:
