@@ -1,0 +1,44 @@
+{
+    "name": "energon7/nova-menu-builder",
+    "description": "Advanced Menu Builder Tool for Laravel Nova.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "menu",
+        "builder",
+        "Energon7"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Azer Mammadov",
+            "email": "energon7777@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "spatie/laravel-translatable": "^4.1"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Energon7\\MenuBuilder\\": "src/"
+        },
+        "files": [
+          "src/Http/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Energon7\\MenuBuilder\\MenuBuilderServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
