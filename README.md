@@ -77,7 +77,7 @@ There are two helpers built in for your blades
 
 //or
 
-{!! menu_builder('main', 'parent-class', 'child-class',with children(boolean) , with active/deactive(boolean), 'dl', 
+{!! menu_builder('main', 'parent-class', 'child-class',with children(boolean) ,active/deactive(boolean), 'dl', 
 'dd') !!}
 
 booleans default is true
