@@ -19,7 +19,7 @@ Fixes :
 Updates : 
 
     - added compatibility with Spatie Translatable package.
-    
+    - added dynamic language selector from database
 
  
 This tool allows you to create menus in Laravel Nova
@@ -38,13 +38,13 @@ You can install the package in to a Laravel app that uses [Nova](https://nova.la
 composer require energon7/nova-menu-builder
 ```
 
-Then you should publish the database table file and migrate it:
+Then you should publish the service provider, migrate database:
 
 ```bash
-php artisan vendor:publish --tag=menu-builder-migration
+php artisan vendor:publish --provider="Energon7\MenuBuilder\MenuBuilderServiceProvider"
 php artisan migrate
 ```
-
+Then create your own table "languages"
 
 ## Usage
 
