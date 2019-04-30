@@ -6,6 +6,11 @@ export default {
             })
             .then(response => response.data);
     },
+    getLocales() {
+        return window.axios
+            .get('/nova-vendor/menu-builder/locales')
+            .then(response => response.data);
+    },
 
     saveItems(menu, menuItems) {
         return window.axios

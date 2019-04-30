@@ -1,6 +1,13 @@
 <template>
     <div class="py-3">
+        
         <div class="flex justify-end menu-button">
+            <a v-for="locale in locales" v-if="currentLang!==locale.code_field"
+               :key="locale"
+               :href="`?lang=`+locale.code_field"
+               class="btn btn-default btn-icon bg-primary mr-3 text-white" >
+                {{ locale.label }}
+            </a>
             <button
                 title="Add"
                 class="btn btn-default btn-icon bg-primary mr-3 text-white"
@@ -350,6 +357,7 @@ export default {
         modalConfirm: false,
         modalItem: false,
         currentLang:null,
+        locales:[],
         itemToDelete: null,
         update: false,
         newItem: {
@@ -383,6 +391,12 @@ export default {
     }),
 
     methods: {
+        getLocales() {
+            api.getLocales().then(result => {
+                this.locales = _.values(result);
+            });
+        },
+
         newItemMenu() {
             this.update = false;
             this.modalItem = true;
@@ -502,6 +516,7 @@ export default {
         this.newItem.menu_id = this.resourceId;
         this.toogleLabels = { checked: this.__('Enabled'), unchecked: this.__('Disabled') };
         this.switchColor = { checked: '#21b978', unchecked: '#dae1e7', disabled: '#eef1f4' };
+        this.getLocales();
         this.getData();
     },
 };

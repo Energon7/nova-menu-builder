@@ -2,6 +2,7 @@
 
 namespace Energon7\MenuBuilder\Http\Controllers;
 
+use Energon7\MenuBuilder\Http\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Energon7\MenuBuilder\Http\Models\Menu;
@@ -24,6 +25,17 @@ class MenuController extends Controller
         }
 
         return Menu::with('parentItems')->find($request->get('menu'))->optionsMenu();
+    }
+
+
+    public function locales()
+    {
+       return Language::all()->map(function($lang) {
+              return [
+                  'code_field' => $lang->{config('menu-builder.code_field')},
+                  'label' => $lang->{config('menu-builder.label_field')}
+              ];
+       });
     }
 
     /**

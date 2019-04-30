@@ -26,6 +26,8 @@ class MenuBuilderServiceProvider extends ServiceProvider
 
         $this->publishMigrations();
 
+        $this->publishConfig();
+
         Nova::serving(function (ServingNova $event) {
             //
         });
@@ -59,9 +61,15 @@ class MenuBuilderServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/Migrations/create_menus_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_menus_table.php'),
-        ], 'menu-builder-migration');
+            ], 'menu-builder-migration');
     }
 
+    private function publishConfig()
+    {
+        $this->publishes([
+            __DIR__ . '/../config/menu-builder.php' => config_path('menu-builder.php'),
+        ], 'config');
+    }
     /**
      * Register any application services.
      *

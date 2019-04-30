@@ -19,7 +19,6 @@
     "require": {
         "php": ">=7.1.0",
         "spatie/laravel-translatable": "^4.1"
-
     },
     "autoload": {
         "psr-4": {
