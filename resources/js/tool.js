@@ -10,5 +10,5 @@ Nova.booting((Vue, router) => {
     ]);
 
     Vue.use(ToggleButton);
-    Vue.component('menu-builder', require('./components/BuilderResourceTool'));
+    Vue.component('builder-resource-tool', require('./components/BuilderResourceTool'));
 });
