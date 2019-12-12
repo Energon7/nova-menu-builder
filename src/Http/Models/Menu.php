@@ -2,6 +2,7 @@
 
 namespace Energon7\MenuBuilder\Http\Models;
 
+use Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,7 @@ class Menu extends Model
         parent::boot();
 
         static::saving(function ($model) {
-            $model->slug = str_slug($model->name);
+            $model->slug = Str::slug($model->name);
         });
     }
 
