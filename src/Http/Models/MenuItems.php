@@ -15,7 +15,7 @@ class MenuItems extends Model
 
     use HasTranslations;
 
-    public $translatable =['name'];
+    public $translatable =['name','seo_title','seo_description','seo_keywords'];
 
     /**
      * @var array
