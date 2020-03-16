@@ -1,5 +1,4 @@
 <template>
-    <portal to="modals" :name="name">
         <transition name="fade">
             <modal>
                 <div class="bg-white rounded-lg shadow-lg" :style="style">
@@ -10,8 +9,7 @@
                     </div>
                 </div>
             </modal>
-        </transition>
-    </portal>
+       </transition>
 </template>
 
 <script>

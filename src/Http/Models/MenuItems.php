@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Route;
 use Energon7\MenuBuilder\Http\Models\Menu;
+use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 class MenuItems extends Model
@@ -19,7 +20,7 @@ class MenuItems extends Model
     /**
      * @var array
      */
-    protected $fillable = ['menu_id', 'name', 'url', 'route', 'parameters', 'target', 'parent_id', 'order', 'enabled', 'classes'];
+    protected $fillable = ['menu_id', 'name', 'url', 'route', 'parameters', 'target', 'parent_id', 'order', 'enabled', 'classes','seo_title','seo_description','seo_keywords'];
 
     /**
      * @var mixed
@@ -117,7 +118,7 @@ class MenuItems extends Model
             return route($this->route, $this->parameters, $absolute);
         }
 
-        if (starts_with($this->url, 'http')) {
+        if (Str::startsWith($this->url, 'http')) {
             $absolute = true;
         }
 
