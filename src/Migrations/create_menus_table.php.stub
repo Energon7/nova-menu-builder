@@ -32,6 +32,9 @@ class CreateMenusTable extends Migration
             $table->integer('order');
             $table->boolean('enabled')->default(1);
             $table->string('classes')->nullable();
+            $table->string('seo_title')->nullable();
+            $table->text('seo_description')->nullable();
+            $table->text('seo_keywords')->nullable();
             $table->timestamps();
 
             $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');

@@ -292,6 +292,54 @@
                                 />
                             </div>
                         </div>
+                        <div class="flex border-b border-40" v-if="newItem.type">
+                            <div class="w-1/5 py-4">
+                                <label class="inline-block text-80 pt-2 leading-tight">
+                                    {{ __('Seo Title') }}
+                                </label>
+                            </div>
+                            <div class="py-4 w-4/5">
+                                <input
+                                    v-model="newItem.seo_title"
+                                    id="classes"
+                                    type="text"
+                                    :placeholder="this.__('Seo Title')"
+                                    class="w-full form-control form-input form-input-bordered"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex border-b border-40" v-if="newItem.type">
+                            <div class="w-1/5 py-4">
+                                <label class="inline-block text-80 pt-2 leading-tight">
+                                    {{ __('Seo Description') }}
+                                </label>
+                            </div>
+                            <div class="py-4 w-4/5">
+                                <input
+                                    v-model="newItem.seo_description"
+                                    id="classes"
+                                    type="text"
+                                    :placeholder="this.__('Seo Description')"
+                                    class="w-full form-control form-input form-input-bordered"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex border-b border-40" v-if="newItem.type">
+                            <div class="w-1/5 py-4">
+                                <label class="inline-block text-80 pt-2 leading-tight">
+                                    {{ __('Seo Keywords') }}
+                                </label>
+                            </div>
+                            <div class="py-4 w-4/5">
+                                <input
+                                    v-model="newItem.seo_keywords"
+                                    id="classes"
+                                    type="text"
+                                    :placeholder="this.__('Seo Keywords')"
+                                    class="w-full form-control form-input form-input-bordered"
+                                />
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div slot="buttons">
@@ -369,6 +417,9 @@ export default {
             target: '_self',
             active: true,
             classes: null,
+            seo_title: null,
+            seo_description: null,
+            seo_keywords: null,
             menu_id: null,
             enabled: true,
         },
