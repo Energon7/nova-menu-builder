@@ -300,7 +300,8 @@
                             </div>
                             <div class="py-4 w-4/5">
                                 <input
-                                    v-model="newItem.seo_title"
+                                    :value="newItem.seo_title ? newItem.seo_title[currentLang]: ''"
+                                    @input="fillInputs($event.target.value,'seo_title')"
                                     id="classes"
                                     type="text"
                                     :placeholder="this.__('Seo Title')"
@@ -316,7 +317,8 @@
                             </div>
                             <div class="py-4 w-4/5">
                                 <input
-                                    v-model="newItem.seo_description"
+                                    :value="newItem.seo_description ? newItem.seo_description[currentLang]: ''"
+                                    @input="fillInputs($event.target.value,'seo_description')"
                                     id="classes"
                                     type="text"
                                     :placeholder="this.__('Seo Description')"
@@ -332,7 +334,8 @@
                             </div>
                             <div class="py-4 w-4/5">
                                 <input
-                                    v-model="newItem.seo_keywords"
+                                    @input="fillInputs($event.target.value,'seo_keywords')"
+                                    :value="newItem.seo_keywords ? newItem.seo_keywords[currentLang]: ''"
                                     id="classes"
                                     type="text"
                                     :placeholder="this.__('Seo Keywords')"
@@ -404,7 +407,6 @@ export default {
     data: () => ({
         modalConfirm: false,
         modalItem: false,
-        currentLang:null,
         locales:[],
         itemToDelete: null,
         update: false,
@@ -452,7 +454,10 @@ export default {
             this.update = false;
             this.modalItem = true;
         },
-
+        fillInputs(val,key) {
+            if(!this.newItem[key]) this.newItem[key]={};
+            this.newItem[key][this.currentLang] = val;
+        },
         fillNameInput(val){
             if(!this.newItem.name) this.newItem.name={};
             this.newItem.name[this.currentLang] = val;
@@ -562,8 +567,14 @@ export default {
             }
         },
     },
+    computed:{
+      currentLang() {
+          return this.$route.query.lang || window.config.locale;
+      }
+    },
     mounted() {
-        this.currentLang = window.config.currentLocal;
+
+        console.log(this.currentLang);
         this.newItem.menu_id = this.resourceId;
         this.toogleLabels = { checked: this.__('Enabled'), unchecked: this.__('Disabled') };
         this.switchColor = { checked: '#21b978', unchecked: '#dae1e7', disabled: '#eef1f4' };
