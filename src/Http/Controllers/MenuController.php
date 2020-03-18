@@ -4,7 +4,7 @@ namespace Energon7\MenuBuilder\Http\Controllers;
 
 use Energon7\MenuBuilder\Http\Models\Language;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 use Energon7\MenuBuilder\Http\Models\Menu;
 use Energon7\MenuBuilder\Http\Models\MenuItems;
 use Energon7\MenuBuilder\Http\Requests\NewMenuItemRequest;
