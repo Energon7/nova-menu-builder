@@ -116,9 +116,10 @@ class MenuController extends Controller
      */
     public function destroy(MenuItems $item)
     {
-        $item->children()->delete();
-        $item->delete();
-
+        if($item->can_delete) {
+            $item->children()->delete();
+            $item->delete();
+        }
         return response()->json([
             'success' => true,
         ]);
