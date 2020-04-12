@@ -48,6 +48,7 @@
                             </button>
 
                             <button
+                                v-if="item.can_delete"
                                 v-on:click="removeMenu(item)"
                                 title="Delete"
                                 class="appearance-none cursor-pointer text-70 hover:text-primary mr-3 self-center"
