@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::any('/items', 'MenuController@items');
+Route::get('/get_allowed_items', 'MenuController@allowed_items');
 Route::get('/locales', 'MenuController@locales');
 Route::post('/save-items', 'MenuController@saveItems');
 Route::post('/new-item', 'MenuController@createNew');

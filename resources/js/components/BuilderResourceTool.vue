@@ -207,6 +207,27 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="flex border-b border-40">
+                            <div class="w-1/5 py-4">
+                                <label class="inline-block text-80 pt-2 leading-tight">
+                                    {{ __('Page Type') }}
+                                </label>
+                            </div>
+                            <div class="py-4 w-4/5">
+                                <select
+                                    v-model="newItem.page_id"
+                                    id="type2"
+                                    class="w-full form-control form-select"
+                                >
+                                    <option value="" selected="selected" disabled="disabled">
+                                        {{ __('Choose an option') }}
+                                    </option>
+
+                                    <option v-for="pg in allowed_items" :value="pg.id"> {{ pg.name }} </option>
+
+                                </select>
+                            </div>
+                        </div>
                         <template v-if="newItem.type == 'link'">
                             <div class="flex border-b border-40">
                                 <div class="w-1/5 py-4">
@@ -216,7 +237,8 @@
                                 </div>
                                 <div class="py-4 w-4/5">
                                     <input
-                                        v-model="newItem.url"
+                                        :value="newItem.url ? newItem.url[currentLang]: ''"
+                                        @input="fillUrlInput($event.target.value)"
                                         id="url"
                                         type="text"
                                         :placeholder="this.__('URL')"
@@ -407,11 +429,13 @@ export default {
     },
     data: () => ({
         modalConfirm: false,
+        allowed_items: [],
         modalItem: false,
         locales:[],
         itemToDelete: null,
         update: false,
         newItem: {
+            page_id: null,
             name: null,
             type: '',
             url: null,
@@ -443,8 +467,24 @@ export default {
         toogleLabels: false,
         switchColor: {},
     }),
-
     methods: {
+         slugify(text) {
+
+            const from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;"
+            const to = "aaaaaeeeeeiiiiooooouuuunc------"
+
+            const newText = text.split('').map(
+                (letter, i) => letter.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i)))
+
+            return newText
+                .toString()                     // Cast to string
+                .toLowerCase()                  // Convert the string to lowercase letters
+                .trim()                         // Remove whitespace from both sides of a string
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/&/g, '-y-')           // Replace & with 'and'
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-');        // Replace multiple - with single -
+        },
         getLocales() {
             api.getLocales().then(result => {
                 this.locales = _.values(result);
@@ -462,6 +502,11 @@ export default {
         fillNameInput(val){
             if(!this.newItem.name) this.newItem.name={};
             this.newItem.name[this.currentLang] = val;
+            this.newItem.url = this.slugify(val);
+        },
+        fillUrlInput(val){
+            if(!this.newItem.url) this.newItem.name={};
+            this.newItem.url[this.currentLang] = val;
         },
 
         closeModal() {
@@ -573,9 +618,9 @@ export default {
           return this.$route.query.lang || window.config.locale;
       }
     },
-    mounted() {
+    async mounted() {
+        this.allowed_items = await  api.getAllowedItems();
 
-        console.log(this.currentLang);
         this.newItem.menu_id = this.resourceId;
         this.toogleLabels = { checked: this.__('Enabled'), unchecked: this.__('Disabled') };
         this.switchColor = { checked: '#21b978', unchecked: '#dae1e7', disabled: '#eef1f4' };

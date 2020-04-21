@@ -5,6 +5,11 @@ export default {
                 menu: menu,
             })
             .then(response => response.data);
+    }, 
+    getAllowedItems() {
+        return window.axios
+            .get('/nova-vendor/menu-builder/get_allowed_items')
+            .then(response => response.data);
     },
     getLocales() {
         return window.axios

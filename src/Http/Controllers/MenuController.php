@@ -2,6 +2,7 @@
 
 namespace Energon7\MenuBuilder\Http\Controllers;
 
+use App\Page;
 use Energon7\MenuBuilder\Http\Models\Language;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,11 @@ class MenuController extends Controller
         }
 
         return Menu::with('parentItems')->find($request->get('menu'))->optionsMenu();
+    }    
+    
+    public function allowed_items(Request $request)
+    {
+        return  Page::all();
     }
 
 
