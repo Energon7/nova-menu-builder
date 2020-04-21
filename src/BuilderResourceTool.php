@@ -2,6 +2,8 @@
 
 namespace Energon7\MenuBuilder;
 
+
+use App\Page;
 use Laravel\Nova\ResourceTool;
 
 class BuilderResourceTool extends ResourceTool
@@ -12,6 +14,7 @@ class BuilderResourceTool extends ResourceTool
      *
      * @return string
      */
+
 
 
     public function name()

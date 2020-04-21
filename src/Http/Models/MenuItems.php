@@ -2,6 +2,7 @@
 
 namespace Energon7\MenuBuilder\Http\Models;
 
+use App\Page;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,12 +16,12 @@ class MenuItems extends Model
 
     use HasTranslations;
 
-    public $translatable =['name','seo_title','seo_description','seo_keywords'];
+    public $translatable =['name','url','seo_title','seo_description','seo_keywords'];
 
     /**
      * @var array
      */
-    protected $fillable = ['menu_id', 'name', 'url', 'route', 'parameters', 'target', 'parent_id', 'order', 'enabled', 'classes','seo_title','seo_description','seo_keywords'];
+    protected $fillable = ['menu_id','page_id' ,'name', 'url', 'route', 'parameters', 'target', 'parent_id', 'order', 'enabled', 'classes','seo_title','seo_description','seo_keywords'];
 
     /**
      * @var mixed
@@ -54,7 +55,9 @@ class MenuItems extends Model
     {
         return $this->hasMany(self::class, 'parent_id')->orderBy('order')->with('children');
     }
-
+    public function page() {
+        return $this->belongsTo(Page::class);
+    }
     /**
      * @param $parentId
      *
