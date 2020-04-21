@@ -189,27 +189,6 @@
                         <div class="flex border-b border-40">
                             <div class="w-1/5 py-4">
                                 <label class="inline-block text-80 pt-2 leading-tight">
-                                    {{ __('Link type') }}
-                                </label>
-                            </div>
-                            <div class="py-4 w-4/5">
-                                <select
-                                    v-model="newItem.type"
-                                    @change="setNulls"
-                                    id="type"
-                                    class="w-full form-control form-select"
-                                >
-                                    <option value="" selected="selected" disabled="disabled">
-                                        {{ __('Choose an option') }}
-                                    </option>
-                                    <option value="link"> {{ __('Static Url') }} </option>
-                                    <option value="route"> {{ __('Dynamic Route') }} </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="flex border-b border-40">
-                            <div class="w-1/5 py-4">
-                                <label class="inline-block text-80 pt-2 leading-tight">
                                     {{ __('Page Type') }}
                                 </label>
                             </div>
@@ -228,7 +207,7 @@
                                 </select>
                             </div>
                         </div>
-                        <template v-if="newItem.type == 'link'">
+                        <template>
                             <div class="flex border-b border-40">
                                 <div class="w-1/5 py-4">
                                     <label class="inline-block text-80 pt-2 leading-tight">
@@ -237,46 +216,13 @@
                                 </div>
                                 <div class="py-4 w-4/5">
                                     <input
-                                        :value="newItem.url ? newItem.url[currentLang]: ''"
+                                        v-model="newItem.url[currentLang]"
                                         @input="fillUrlInput($event.target.value)"
                                         id="url"
                                         type="text"
                                         :placeholder="this.__('URL')"
                                         class="w-full form-control form-input form-input-bordered"
                                     />
-                                </div>
-                            </div>
-                        </template>
-
-                        <template v-if="newItem.type == 'route'">
-                            <div class="flex border-b border-40">
-                                <div class="w-1/5 py-4">
-                                    <label class="inline-block text-80 pt-2 leading-tight">
-                                        {{ __('Route') }}
-                                    </label>
-                                </div>
-                                <div class="py-4 w-4/5">
-                                    <input
-                                        v-model="newItem.route"
-                                        id="route"
-                                        type="text"
-                                        :placeholder="this.__('Route')"
-                                        class="w-full form-control form-input form-input-bordered"
-                                    />
-                                </div>
-                            </div>
-                            <div class="flex border-b border-40">
-                                <div class="w-1/5 py-4">
-                                    <label class="inline-block text-80 pt-2 leading-tight">
-                                        {{ __('Parameters') }}
-                                    </label>
-                                </div>
-                                <div class="py-4 w-4/5">
-                                    <codemirror
-                                        v-model="newItem.parameters"
-                                        :options="cmOptions"
-                                        :placeholder="cmPlaceholder"
-                                    ></codemirror>
                                 </div>
                             </div>
                         </template>
@@ -427,46 +373,50 @@ export default {
         codemirror,
         Modal,
     },
-    data: () => ({
-        modalConfirm: false,
-        allowed_items: [],
-        modalItem: false,
-        locales:[],
-        itemToDelete: null,
-        update: false,
-        newItem: {
-            page_id: null,
-            name: null,
-            type: '',
-            url: null,
-            route: null,
-            parameters: '',
-            target: '_self',
-            active: true,
-            classes: null,
-            seo_title: null,
-            seo_description: null,
-            seo_keywords: null,
-            menu_id: null,
-            enabled: true,
-        },
-        cmOptions: {
-            tabSize: 2,
-            theme: 'dracula',
-            lineNumbers: true,
-            lineWrapping: true,
-            foldGutter: true,
-            line: true,
-            mode: {
-                name: 'javascript',
-                json: true,
+    data() {
+        return {
+            modalConfirm: false,
+            allowed_items: [],
+            modalItem: false,
+            locales:[],
+            itemToDelete: null,
+            update: false,
+            newItem: {
+                page_id: null,
+                name: null,
+                type: 'link',
+                url: {
+                    [this.$route.query.lang || window.config.locale]:null
+                },
+                route: null,
+                parameters: '',
+                target: '_self',
+                active: true,
+                classes: null,
+                seo_title: null,
+                seo_description: null,
+                seo_keywords: null,
+                menu_id: null,
+                enabled: true,
             },
-        },
-        cmPlaceholder: '{\n  "id": 1\n}',
-        menuItems: [],
-        toogleLabels: false,
-        switchColor: {},
-    }),
+            cmOptions: {
+                tabSize: 2,
+                theme: 'dracula',
+                lineNumbers: true,
+                lineWrapping: true,
+                foldGutter: true,
+                line: true,
+                mode: {
+                    name: 'javascript',
+                    json: true,
+                },
+            },
+            cmPlaceholder: '{\n  "id": 1\n}',
+            menuItems: [],
+            toogleLabels: false,
+            switchColor: {},
+        }
+    },
     methods: {
          slugify(text) {
 
@@ -496,17 +446,20 @@ export default {
             this.modalItem = true;
         },
         fillInputs(val,key) {
+             console.log(this.newItem);
             if(!this.newItem[key]) this.newItem[key]={};
             this.newItem[key][this.currentLang] = val;
         },
-        fillNameInput(val){
+        fillNameInput(val) {
+
             if(!this.newItem.name) this.newItem.name={};
             this.newItem.name[this.currentLang] = val;
-            this.newItem.url = this.slugify(val);
+
+            this.newItem.url[this.currentLang] = this.slugify(val);
         },
         fillUrlInput(val){
-            if(!this.newItem.url) this.newItem.name={};
-            this.newItem.url[this.currentLang] = val;
+            /*if(!this.newItem.url) this.newItem.url={};
+            this.newItem.url[this.currentLang] = val;*/
         },
 
         closeModal() {
@@ -520,7 +473,7 @@ export default {
                 this.menuItems = _.values(result);
             });
         },
-        setNulls() {
+       /* setNulls() {
             if (this.newItem.type == 'link') {
                 this.newItem.route = null;
                 this.newItem.parameters = '';
@@ -529,7 +482,7 @@ export default {
             if (this.newItem.type == 'route') {
                 this.newItem.url = null;
             }
-        },
+        },*/
 
         editMenu(item) {
             api.edit(item.id).then(result => {
@@ -557,17 +510,19 @@ export default {
         },
 
         resetNewItem() {
-            this.newItem = {
-                name: null,
-                type: '',
-                url: null,
-                route: null,
-                parameters: '',
-                target: '_self',
-                active: true,
-                classes: null,
-                menu_id: this.resourceId,
-            };
+                this.newItem.page_id = null;
+                this.newItem.name = null;
+                this.newItem.url = { [this.currentLang]:null };
+                this.newItem.route = null;
+                this.newItem.parameters = '';
+                this.newItem.target = '_self';
+                this.newItem.active = true;
+                this.newItem.classes = null;
+                this.newItem.seo_title = null;
+                this.newItem.seo_description = null;
+                this.newItem.seo_keywords = null;
+                this.newItem.enabled = true;
+                this.newItem.menu_id = this.resourceId;
         },
 
         confirmItemCreate() {
