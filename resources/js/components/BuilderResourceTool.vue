@@ -198,7 +198,7 @@
                                     id="type2"
                                     class="w-full form-control form-select"
                                 >
-                                    <option value="" selected="selected" disabled="disabled">
+                                    <option value="" selected="selected" >
                                         {{ __('Choose an option') }}
                                     </option>
 
