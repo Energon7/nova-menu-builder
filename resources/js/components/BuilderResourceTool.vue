@@ -419,30 +419,19 @@ export default {
         }
     },
     methods: {
-         slugify(text) {
+       slugify(string) {
+            const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșəıťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+            const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrssssseittuuuuuuuuuwxyyzzz------'
+            const p = new RegExp(a.split('').join('|'), 'g')
 
-            const from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;"
-            const to = "aaaaaeeeeeiiiiooooouuuunc------"
-
-            const newText = text.split('').map(
-                (letter, i) => letter.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i)))
-            console.log(newText);
-            return newText
-                .toString()                     // Cast to string
-                .trim()  
-				.toLowerCase()   				// Remove whitespace from both sides of a string
-                .replace('ə', 'e')
-                .replace('ü', 'u')
-                .replace('ğ', 'g')
-                .replace('ç', 'c')
-                .replace('ö', 'o')
-                .replace('ı', 'i')
-                .replace('ş', 's')
-                               // Convert the string to lowercase letters
-                .replace(/\s+/g, '-')           // Replace spaces with -
-                .replace(/&/g, '-y-')           // Replace & with 'and'
-                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                .replace(/\-\-+/g, '-');        // Replace multiple - with single -
+            return string.toString().toLowerCase()
+                .replace(/\s+/g, '-') // Replace spaces with -
+                .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+                .replace(/&/g, '-and-') // Replace & with 'and'
+                .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+                .replace(/\-\-+/g, '-') // Replace multiple - with single -
+                .replace(/^-+/, '') // Trim - from start of text
+                .replace(/-+$/, '') // Trim - from end of text
         },
         getLocales() {
             api.getLocales().then(result => {
