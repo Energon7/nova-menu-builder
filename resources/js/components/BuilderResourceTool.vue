@@ -216,8 +216,7 @@
                                 </div>
                                 <div class="py-4 w-4/5">
                                     <input
-                                        v-model="newItem.url[currentLang]"
-                                        @input="fillUrlInput($event.target.value)"
+										readonly
                                         id="url"
                                         type="text"
                                         :placeholder="this.__('URL')"
@@ -428,7 +427,8 @@ export default {
             console.log(newText);
             return newText
                 .toString()                     // Cast to string
-                .trim()                         // Remove whitespace from both sides of a string
+                .trim()  
+				.toLowerCase()   				// Remove whitespace from both sides of a string
                 .replace('ə', 'e')
                 .replace('ü', 'u')
                 .replace('ğ', 'g')
@@ -436,7 +436,7 @@ export default {
                 .replace('ö', 'o')
                 .replace('ı', 'i')
                 .replace('ş', 's')
-                .toLowerCase()                  // Convert the string to lowercase letters
+                               // Convert the string to lowercase letters
                 .replace(/\s+/g, '-')           // Replace spaces with -
                 .replace(/&/g, '-y-')           // Replace & with 'and'
                 .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
