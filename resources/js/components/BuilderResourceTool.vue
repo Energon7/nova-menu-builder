@@ -217,6 +217,8 @@
                                 <div class="py-4 w-4/5">
                                     <input
 										readonly
+                                        v-model="newItem.url[currentLang]"
+                                        
                                         id="url"
                                         type="text"
                                         :placeholder="this.__('URL')"
