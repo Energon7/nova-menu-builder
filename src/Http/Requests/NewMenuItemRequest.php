@@ -28,6 +28,7 @@ class NewMenuItemRequest extends FormRequest
         $rules = [
             'menu_id' => 'required|exists:menus,id',
             'name'    => 'required',
+			'page_id' => 'unique:menu_items,page_id',
             'type'    => 'required|in:link,route',
             'target'  => 'required|in:_self,_blank',
         ];
