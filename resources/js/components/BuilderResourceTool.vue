@@ -425,11 +425,18 @@ export default {
 
             const newText = text.split('').map(
                 (letter, i) => letter.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i)))
-
+            console.log(newText);
             return newText
                 .toString()                     // Cast to string
-                .toLowerCase()                  // Convert the string to lowercase letters
                 .trim()                         // Remove whitespace from both sides of a string
+                .replace('ə', 'e')
+                .replace('ü', 'u')
+                .replace('ğ', 'g')
+                .replace('ç', 'c')
+                .replace('ö', 'o')
+                .replace('ı', 'i')
+                .replace('ş', 's')
+                .toLowerCase()                  // Convert the string to lowercase letters
                 .replace(/\s+/g, '-')           // Replace spaces with -
                 .replace(/&/g, '-y-')           // Replace & with 'and'
                 .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
