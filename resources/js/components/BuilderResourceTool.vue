@@ -365,7 +365,12 @@ import 'codemirror/theme/dracula.css';
 import 'codemirror/mode/javascript/javascript';
 import Modal from './Modal';
 import api from '../api';
-
+  const slugifyMethod = require('slugify')
+  slugifyMethod.extend({'ç': 'c'});
+  slugifyMethod.extend({'ş': 's'});
+  slugifyMethod.extend({'ə': 'e'});
+  slugifyMethod.extend({'ı': 'i'});
+  slugifyMethod.extend({'ü': 'u'});
 export default {
     props: ['resourceName', 'resourceId','field'],
     components: {
@@ -419,20 +424,9 @@ export default {
         }
     },
     methods: {
-       slugify(string) {
-            const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșəıťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
-            const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrssssseittuuuuuuuuuwxyyzzz------'
-            const p = new RegExp(a.split('').join('|'), 'g')
-
-            return string.toString().toLowerCase()
-                .replace(/\s+/g, '-') // Replace spaces with -
-                .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-                .replace(/&/g, '-and-') // Replace & with 'and'
-                .replace(/[^\w\-]+/g, '') // Remove all non-word characters
-                .replace(/\-\-+/g, '-') // Replace multiple - with single -
-                .replace(/^-+/, '') // Trim - from start of text
-                .replace(/-+$/, '') // Trim - from end of text
-        },
+      slugify(string) {
+        return slugifyMethod(string,'-').toLowerCase()
+      },
         getLocales() {
             api.getLocales().then(result => {
                 this.locales = _.values(result);
