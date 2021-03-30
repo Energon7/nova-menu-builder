@@ -16,8 +16,13 @@ class MenuItems extends Model
 
     use HasTranslations;
 
-    public $translatable =['name','url','seo_title','seo_description','seo_keywords'];
+    public $translatable = [];
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->translatable = config('menu-builder.translatable_fields.menu_items');
+    }
     /**
      * @var array
      */
