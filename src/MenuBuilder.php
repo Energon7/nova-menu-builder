@@ -12,10 +12,7 @@ class MenuBuilder extends Tool
      *
      * @return void
      */
-public function __construct()
-{
-    $this->withMeta(['test'=>1]);
-}
+
 
     public function boot()
     {
